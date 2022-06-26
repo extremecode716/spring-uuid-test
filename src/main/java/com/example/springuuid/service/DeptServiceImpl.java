@@ -22,7 +22,6 @@ public class DeptServiceImpl implements DeptService {
         deptRepository.findAll().forEach(dept -> {
             log.info("deptList");
             list.add(dept);
-            throw new RuntimeException("hi");
         });
 
         return list;

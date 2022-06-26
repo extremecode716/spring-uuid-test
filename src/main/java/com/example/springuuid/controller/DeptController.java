@@ -1,5 +1,6 @@
 package com.example.springuuid.controller;
 
+import com.example.springuuid.service.BeanUtils;
 import com.example.springuuid.service.DeptService;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;

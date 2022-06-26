@@ -1,10 +1,12 @@
 package com.example.springuuid.core;
 
+import com.example.springuuid.vo.LogScopeInfo;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.logging.log4j.core.LogEvent;
 import org.apache.logging.log4j.core.config.plugins.Plugin;
 import org.apache.logging.log4j.core.pattern.ConverterKeys;
 import org.apache.logging.log4j.core.pattern.LogEventPatternConverter;
+import org.springframework.web.context.request.RequestAttributes;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
 
@@ -23,18 +25,22 @@ public class TraceIdConverter extends LogEventPatternConverter {
         return new TraceIdConverter("traceId", "traceId");
     }
 
-    // 로그를 찍을때 마다 가져온다.
     @Override
     public void format(LogEvent event, StringBuilder toAppendTo) {
-        log.info("{}", event.getMessage());
-        String traceId = null;
         try {
-            final HttpServletRequest request = ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest();
-            if (request != null)
-                traceId = (String) request.getSession().getAttribute("traceId");
+            final RequestAttributes requestAttributes = RequestContextHolder.getRequestAttributes();
+            if (requestAttributes == null)
+                return;
+            final HttpServletRequest request = ((ServletRequestAttributes) requestAttributes).getRequest();
+            if (request == null)
+                return;
+            final Object logScopeInfo = request.getSession().getAttribute("logScopeInfo");
+            if (logScopeInfo == null)
+                return;
+            toAppendTo.append(((LogScopeInfo) logScopeInfo).getUUID());
         } catch (Exception e) {
-
+            e.printStackTrace();
         }
-        toAppendTo.append(traceId == null ? "" : traceId);
+
     }
 }
