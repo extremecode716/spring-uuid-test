@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- packages 에 로그패턴을 만든 패키지 경로를 넣을 것-->
+<Configuration status="INFO" packages="com.example.springuuid.core" monitorInterval="30">
+    <Properties>
+        <Property name="logFileName">spring-log4j2</Property>
+        <Property name="consoleLayout">|%traceId| %style{%d{ISO8601}}{green} %highlight{%-5level }[%style{%t}{bright,blue}] %style{%C{1.}}{bright,yellow}: %msg%n%throwable
+        </Property>
+        <Property name="fileLayout">%traceId %d [%t] %-5level %c(%M:%L) - %m%n</Property>
+    </Properties>
+    <Appenders>
+        <Console name="console" target="SYSTEM_OUT">
+            <PatternLayout pattern="${consoleLayout}"/>
+        </Console>
+        <RollingFile name="file" fileName="logs/${logFileName}.log"
+                     filePattern="logs/${logFileName}.%d{yyyy-MM-dd}.log">
+            <PatternLayout pattern="${fileLayout}"/>
+            <Policies>
+                <TimeBasedTriggeringPolicy interval="1"/><!-- 일자별 로그 파일 생성-->
+            </Policies>
+        </RollingFile>
+    </Appenders>
+    <Loggers>
+        <logger name="org.springframework" level="info" additivity="false">
+            <AppenderRef ref="console"/>
+            <AppenderRef ref="file"/>
+        </logger>
+
+        <logger name="com.example.springuuid" level="info" additivity="false">
+            <AppenderRef ref="console"/>
+            <AppenderRef ref="file"/>
+        </logger>
+
+        <Root level="info" additivity="false">
+            <AppenderRef ref="console"/>
+            <AppenderRef ref="file"/>
+        </Root>
+    </Loggers>
+</Configuration>
