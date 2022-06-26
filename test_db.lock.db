@@ -1,6 +1,6 @@
 #FileLock
-#Sun Jun 26 22:51:03 KST 2022
-server=172.30.1.7\:6111
+#Sun Jun 26 23:22:48 KST 2022
+server=172.30.1.7\:11796
 hostName=LAPTOP-V788GDUC
 method=file
-id=181a047ae4bc8137c8baf3f0b49b73e3ba7e94d5b10
+id=181a064c0b277dfa80748cbf3f8ab2f17dfe23d4ea4

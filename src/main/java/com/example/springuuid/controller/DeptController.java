@@ -17,9 +17,9 @@ public class DeptController {
     @RequestMapping("/")
     public String main(ModelMap modelMap) {
 
-        log.debug("main 1");
+        log.info("main 1");
         modelMap.addAttribute("deptList", deptService.deptList());
-        log.debug("main 2");
+        log.info("main 2");
         return "main";
     }
 }

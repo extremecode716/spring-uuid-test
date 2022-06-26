@@ -20,8 +20,9 @@ public class DeptServiceImpl implements DeptService {
     public List<Dept> deptList() {
         final List<Dept> list = new ArrayList<>();
         deptRepository.findAll().forEach(dept -> {
-            log.debug("deptList");
+            log.info("deptList");
             list.add(dept);
+            throw new RuntimeException("hi");
         });
 
         return list;

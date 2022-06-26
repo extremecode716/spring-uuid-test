@@ -26,7 +26,7 @@ public class Handler implements HandlerInterceptor {
             httpSession.setAttribute("traceId", traceId);
         }
 
-        log.debug("UUID: {}", traceId);
+        log.info("UUID: {}", traceId);
 
         return HandlerInterceptor.super.preHandle(request, response, handler);
     }
